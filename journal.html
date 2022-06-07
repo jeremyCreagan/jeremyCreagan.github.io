@@ -1,0 +1,729 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Jeremy Creagan</title>
+  <meta name="description" content="Portfolio site for Technical artist and gameplay programmer Jeremy Creagan.">
+  <meta name="author" content="Jeremy Creagan">
+
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <!-- my fontaswesome account-->
+  <script src="https://kit.fontawesome.com/dd2fc2be66.js" crossorigin="anonymous"></script>
+  <!-- scroll nav-->
+</head>
+
+
+<body>
+
+  <div id="site">
+    <div class="journal__align">
+      <section class="section__header" id="top" data-sr>
+        <div class="header__title">
+          <a class="underline-link" href="./index.html">Jeremy Creagan</a>
+        </div>
+        <div class="header__content">
+          <div class="header__links">
+            <a href="jeremy.p.creagan@gmail.com" target="_blank" title="email">
+              <span class="text">email</span>
+              <i class="fas fa-envelope"></i>
+              <img src="images/itchio.svg" alt="twitter"> 
+            </a>
+            <a href="https://twitter.com/KeemlyS" target="_blank" title="twitter">
+              <span class="text">twitter</span>
+              <i class="fab fa-twitter"></i>
+              <img src="images/itchio.svg" alt="twitter">
+            <a href="https://www.linkedin.com/in/jeremy-creagan-a23b23a0/" target="_blank" title="linkedin">
+                <span class="text">linkedin</span>
+                <i class="fab fa-linkedin"></i>
+                <img src="images/itchio.svg" alt="twitter">
+            </a>
+            <a href="https://www.instagram.com/jeremycreagan.226/" target="_blank" title="instagram">
+                <span class="text">instagram</span>
+                <i class="fa-brands fa-instagram"></i>
+                <img src="images/itchio.svg" alt="twitter">
+            </a>
+            <a href="https://www.artstation.com/jeremycreagan" target="_blank" title="artstation">
+                <span class="text">artstation</span>
+                <i class="fa-brands fa-artstation"></i>
+                <img src="images/itchio.svg" alt="twitter">
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    
+    <div class="hor-line"></div>
+
+    <div class="journal__align">
+      <div calss="table__split">
+        <div class="contents">
+            <section class="section__journal" id="entry1" data-sr>
+              <div class="section__title">
+                Proceduraly Animated Chameleon Rig
+                <br>
+              </div>
+              <div class="section__content">
+                <p>
+                  <img class="journal__image" src="./images/camWalkOver.gif" alt="chameleon walking over" />
+                </p>
+                <p>
+                  This was a rigging project I used to explore procedural animation, and get more comfortable programming in Unity.
+                </p>
+                <p>
+                  <strong>What is procedural animation? </strong>
+                </p>
+                <p>
+                  Typically your game character will have a set of artfully crafted animations
+                  that you can switch to and blend between in code. In this case, procedural animation means the animation is driven entirely by code
+                  using no pre-generated data, other than the rig.
+                </p>
+                <p>
+                  Check out 
+                  <a class="underline-link" href="https://www.alanzucconi.com/2017/04/17/procedural-animations/" target="_blank"> Alan Zucconi’s</a>
+                  tutorial series on this subject for more information on the math I used.
+                </p>
+                <p>
+
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/camHeadTurn.gif" alt="chameleon turning head" />
+                </p>
+                <p>
+                  I started by implementing head turning. You'd think this would be simple but it starts getting complex when you want to make everything look
+                  more natural.
+                </p>
+                <p>
+                  First you get a vector by subtracting the target and chameleon's head position, you convert that vector into a quaternion, clamp that by
+                  the relative angle the vector creates with his neck so it doesn't bend too far, and then intrepolate the result using a spherical interpolation
+                  function to smooth the transition. 
+                </p>
+                <p>
+                  <img class="journal__image__small" src="./images/params.png" alt="chameleon turning head" />
+                </p>
+                <p>
+                  All the parameters are serialized so that they can be adjusted to get the best look on the fly inside the Unity editor.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/camLegIK.gif" alt="chameleon legs ik" />
+                </p>
+                <p>
+                  Th inverset kinematics are done with a basic IK script. Because I don't have any complex knee motion it's a simple 2-bone IK with
+                  pole vectores to indicate which direction the bones colapse in. At some point here I remade the entire rig in Maya so that all the
+                  joints would be rotated the same way, making the math in Unity waaay simpler.
+                </p>
+                <p>
+                  the last step was programming the walk cycle. The basic idea was to have the root of the Chameleon float over and slowly rotate to face the target.
+                  then the legs will calculate when and where to relocate with code.
+                </p>
+                <p>
+                  parented to the hips i have locators positioned near all the feet. This would act as a home. If a foots home drifted too far away from its current planted
+                  location it would lift up, and replant nearby.
+                </p>
+                <p>
+                  if you were working with a more complex rig you could combine this technique with keyframed animations but for this simple Chameleon rig it works perfectly!
+                </p>
+              </div>
+          </section>
+          
+          <section class="section__journal" id="entry12" data-sr>
+            <div class="section__title">
+              GPU Profiling
+              <br>
+              <!-- <img class="section__background__portrait" src="images/myLogo.png" alt="My Logo" /> -->
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/billysky.png" alt="picture from past game." />
+              </p>
+              <p>The first time I can remember doing GPU profiling was 2 years ago. I was working on this small Unreal project, 
+                Billy's Adventure, and my group tasked me with figuring why the game would gradually slow down, and after a few minutes,
+                run at 10, maybe 20 FPS.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/mushroom.gif" alt="picture from past game." />
+              </p>
+              <p>A quick glance at the GPU visualizer and it was pretty clear what was going on. 90% of the frame time was being eaten up
+                by dynamic point lights. tens of thousands of them infact. These were being spawned in by a mushroom asset placed throughout
+                the entire level. thousands of little fireflies would spawn in over the course of a few minutes destroying performance.
+              </p>
+              <p>Rather than disabling the lights all-together I figured a better solution would be to give the fire flies a percent chance to
+                light the area around them. This way you get lights popping in an out without the same performance cost.
+              </p>
+              <p>Other than that we added dynamic culling on the grass so that it would only render in such high density 3000 units of range 
+              from the player.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/renderDocSplinter.jpg" alt="picture from past game." />
+              </p>
+              <p>
+                More recently, I revisited Splinter of Regret to see what I could learn through GPU profiling.
+              </p>
+              <p>
+                Splinters was made for PC and well within spec so there weren't many oddities to investigate. However, I was interested to see
+                what it would take to bring our draw calls down to something more acceptable on mobile. In splinters, even with 100s of projectiles
+                on screen the preformance never got very bad because of mesh instancing. We sat right around 750 draw calls.
+              </p>
+              <p>
+                My immediate reaction was that we use quite a lot of our budget on volumetric fog. Not super important since the game plays with a 3/4
+                view facing the ground. I simply turned that off leaving the default heigh fog. Another easy change would be replacing the fog with a depthfade 
+                post-processing effect and more skylight to offset the light bouncing that is lost.
+              </p>
+              <p>
+                <img class="journal__image__small" src="./images/megeScene.png" alt="picture from past game." />
+              </p>
+              <p>
+                Although small, Another improvement was merging all the static enviornment actors in the scene. This amounted to roughly 100 draw calls
+                on each level.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/lightningPass.png" alt="picture from past game." />
+              </p>
+              <p>
+                By far the biggest saving was from converting to baked lighting. At any given moment lighting was eating atleast half of our budget.
+                In some of the frames I looked at a point light was hogging more than 30 draw calls. Not super surprising, but by converting to static
+                lighting draw calls went down by 200-300 depending on the number of lit objects. Of course, new light maps had to be generated on objects
+                that were previously not UV mapped very well to fix visual artifacts.
+              </p>
+              <p>
+                Another big one was OcclusionCulling. Basically, Unreal was relying on less efficient methods of culling to figure out whether or not to draw
+                objects in the level. because We have a fixed camera angle/distance an obvious optimization is to cull entirely by distance since, with the exception
+                of certain edge cases that could be excluded like in the tutorial level, the edge of what is seen stays a fixes distance away from the player. This came
+                out to around 60 saved draw calls but was highly dependant on how large any given level was.
+              </p>
+              <p>
+                The next stop was translucency. We had so many objects that didnt need to be translucent or at the very least could be masked instead. A lot of objects were made translucent
+                with the assumption that at some point they might have an animated fade-in or some other effect. Changing that saved another 40 draw calls.
+              </p>
+              <p>
+                The final big save was from shadows, The shadow cost had already gone down quite a bit when switching from dynamic lighting. Not a whole lot to say here, but
+                switching shadow quality to low cut the number of draw calls they were using in half.
+              </p>
+              <p>
+                There were a few other small changes I made including switching to a single componenet lens flare that cost 1 draw call instead of Unreal's default that Cost 11.
+              </p>
+              <p>
+                In the end, I was able to cut down levels clocking in as high as 783 draw calls down to 328. Still kinda high for mobile but substantially better from before without
+                affecting the look of the game that much.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/stencilMaskFull.png" alt="picture from past game." />
+              </p>
+              <p>
+                I stopped here but I'm sure I could take the number even lower. one angle would be to avoid stencil tracing. I used stencil tracing on the player, enemies, and objects that
+                I want to outline or exclude from projections. finding a more efficient solution would save 50 or so draw calls.
+              </p>
+              <p>
+                I used <a class="underline-link" href="https://renderdoc.org/" target="_blank">RenderDoc</a> for frame analysis.
+              </p>
+            </div>
+        </section>
+  
+          <section class="section__journal" id="entry2" data-sr>
+            <div class="section__title">
+              Radiant Crystal Projectile Swarm
+              <br>
+            </div>
+            <div class="section__content">
+              <section id="entry2a">
+                <p>
+                  <img class="journal__image" src="./images/HighresScreenshot00008.png" alt="picture from past game." />
+                </p>
+                <p>Link to the post on
+                  <a class="underline-link" href="https://www.artstation.com/artwork/YK6nkb" target="_blank"> Artstation here</a>.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/missilesCrystal.png" alt="picture from past game." />
+                </p>
+                <p>
+                  I knew from the start of this project that I wanted to do some sort of swarm missile effect. Not too different from Kai'Sa's 'Q'
+                  ability in League of Legends or the missiles in Gundam.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/gundam.jpg" alt="picture from past game." />
+                </p>
+                <p>
+                  I did some quick research on different ways to go about creating the different projectile paths. I didn't want to use Unreal's 
+                  built in projectile system or hand animate everything in sequencer. Controlling the projectile paths entirely with Niagara was
+                  off the table since I didn't want to limit my ability to experiment with logic on the projectile payload. I ended up going with
+                  an interesting compromise. All of the projectile paths would be created by generating splines on the go in a blueprint.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/splineShot.png" alt="picture from past game." />
+                </p>
+                <p>
+                  The basic idea is that I create a spline between 2 points that roughly looks like what I want, write down the relative position of the
+                  vectors used to create that spline. Then spawn that same arangement in with code instead. The magic comes when you use randomness to
+                  vary the locations of the vecors or directions of the tangents.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/splineLogic.png" alt="picture from past game." />
+                </p>
+                <p>
+                  In the above code I have 2 different splines being created, each with their own random offsets and variation. When each projectile spawns
+                  I can then choose from different projectile behaviours to get even more variation. You can go totally crazy with this, but I went with only
+                  2 for now to save time.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/swarmSpline.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  every frame these splines are being adjusted so that they always lead to their selected target. At the same time, the projectiles are moved by
+                  calculating a distanced traveled at their respective speed and then using Unreal's <strong> Get Location at Distance Along Spline</strong> function.
+                </p>
+                <p>
+                  The result is some pretty interesting homing projectile behavior. Even before adding in any artistic nuances or fourish.
+                </p>
+              </section>
+              <section id="entry2b">
+                <br><br><br><br><br><br><br><br>
+                <p>
+                  <img class="journal__image" src="./images/coasterFull.png" alt="picture from past game." />
+                </p>
+                <p>
+                  I used some nifty tricks when creating the soal coasters for the crystal charging effect.
+                </p>
+                <p>
+                  <strong>What are soul coasters? </strong>
+                </p>
+                <p>
+                  Soul coasters are a fun word for trail shaped mesh particles you use to pan flowing textures over. Typically energy-like effects you want
+                  to travel over predetermined paths in space. 
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/coasterMaya.png" alt="picture from past game." />
+                </p>
+                <p>
+                  I like to make mine in Maya using curves. You can draw a few lines and quickly fill in the space using curve extrude or loft.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/flamePainterTool.png" alt="picture from past game." />
+                </p>
+                <p>
+                  For this project I made the alpha using this really great online tool. You can get some super interesting shapes without much effort.
+                  <a class="underline-link" href="https://www.escapemotions.com/experiments/flame/" target="_blank">Link here</a>.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/soulAnimate.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  Doing that alone still feels pretty static and there are clearly visible hard edges to the effect. The real interest comes when you layer
+                  multiple particles with different variations in location/rotation and pan a mask over everything so there is some breakup.
+                </p>
+                <p>
+                  Now unfortunately with this effect I kind of worked myself into a corner. I wanted to have a translucent soulcoaster, wrapping around a
+                  crystal, which I had unfortunately already made translucent for the spawn in animation. Unreal doesn't know how to handle ordering
+                  translucent objects very well and because the crystal wasn't a particle I couldn't fix it with simple sort ordering.
+                </p>
+                <p>
+                  I decided to use a trick I picked up from 
+                  <a class="underline-link" href="https://www.artstation.com/artwork/B3v258" target="_blank">Simon Trümpler</a>.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/outsideInside.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  For his effect he avoids sorting issues by splitting the outside and inside of the effect into 2 seperate meshes.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/coaster3.png" alt="picture from past game." />
+                </p>
+                <p>
+                  I created a duplicate of my mesh in maya, then flipped all the normals. Then you just switch both materials to be
+                  1-sided and spawn them at the exact same spot. This comes with the added complication of needing to sync up both meshes but you
+                  can do this by injecting the same seed or using material parameter collections. Whatever is needed.
+                </p>
+              </section>
+              <section id="entry2c">
+                <br><br><br><br><br><br><br><br>
+                <p>
+                  <img class="journal__image" src="./images/dolly.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  For the explosion I wanted to have a reality distorting look to it, I saw what I could do with refraction and even added a dolly zoom!
+                  Although I'm not sure it was needed, still fun though.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/suctionEffect.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  To create the suction effect I modeled a funnel and slapped on a translucent material with an index of refraction that gradually increases
+                  near the center. The result is you get a nice black hole effect. It's important to keep the edges exactly and an index of 1 to match the surrounding air.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/suctionAnim.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  After that you can throw it into a particle system and animate the intensity of the effect over time. You want the funnel to be slightly missaligned
+                  from the camera though, otherwise you won't actually see it.
+                </p>
+                <p>I posted the
+                  <a class="underline-link" href="https://www.artstation.com/artwork/YK6nkb" target="_blank"> final result on Artstation here</a>.
+                </p>
+              </section>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry3" data-sr>
+            <div class="section__title">
+              Blood Weapon Trail
+              <br>
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/jeremy-creagan-highresscreenshot00001.jpg" alt="picture from past game." />
+              </p>
+              <p>Link to the post on
+                <a class="underline-link" href="https://www.artstation.com/artwork/WmzerG" target="_blank"> Artstation here</a>.
+              </p>
+              <p>
+                For this effect I was inspired by a
+                <a class="underline-link" href="https://www.utah.edu" target="_blank"> GDC talk</a> that Eben Cook at Naught Dog gave on liquid effects.
+                He does some complex simulation to get the exact look he wants but my goal was to just experiment with Threshold animations by painting something
+                quick textures in photoshop.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/bloodSplat.gif" alt="picture from past game." />
+              </p>
+              <p>
+                The way a treshhold animation works is that rather than using the gradient of value to define a material's shape. At each level of value
+                you paint what you would like the material to look like over the corse of it's life.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/thresholdAnim.png" alt="picture from past game." />
+              </p>
+              <p>
+                For example, at the early stage of this blood particles life it might resemble what's going on in the top left. It's at it's largest size, and
+                no breakup has occured. Over the course of it's life though you can see it start to get smaller and break up. So as you increase the value you're
+                painting with you draw more and more breakup. Afterwards you can blur it all together to get a more gradual shift.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/initialTrail.gif" alt="picture from past game." />
+              </p>
+              <p>
+                Here I have a threshold animation where as you get lower and lower on the particle, the threshold keeps increasing until nothing but the highest value
+                portions of the texture (the droplets) show up.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/fullBloodAttack.gif" alt="picture from past game." />
+              </p>
+              <p>
+                Putting this material on a ribbon already looks pretty cool, but the ribbon is a bit static and the droplets sort of "freeze" in place rather than fly off
+                like you'd expect.
+              </p>
+              <p>
+                I improve this by making the ribbon expand over time and launching particles off of the tip of the blade.
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry4" data-sr>
+            <div class="section__title">
+              Splinters of Regret
+              <br>
+            </div>
+            <div class="section__content">
+              <section id="entry4a">
+                <p>
+                  <img class="journal__image" src="./images/jeremy-creagan-tremorabilitystill.jpg" alt="picture from past game." />
+                </p>
+                <p>Link to the post on
+                  <a class="underline-link" href="https://www.artstation.com/artwork/3qryeJ" target="_blank"> Artstation here</a>.
+                </p>
+                <p>
+                  The first post-proccessing shader I made for Splinters of Regret was a damage indicator for when you were hit by our
+                  special damage type "burden damage".
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/cyberCorruption.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  I started by making a texture multiplication shader that just adds some cool pixelated fractal textures together giving it
+                  a sort of "cyborg corruption" look to it and then I Used some of the same texture as a scalable erosion element for fading it in and
+                  out.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/fadedBurden.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  Next I used a radial gradient exponential to mask the center, turning it into more of a vignette effect. I also added in time dilation,
+                  UV distortion, and chromatic aberration.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/slowmo.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  Then I used a radial gradient exponential to mask the center, turning it into more of a vignette effect. I also added in time dilation,
+                  UV distortion, and chromatic aberration. 
+                </p>
+                <p>
+                  the way the game was designed is that after taking too much burden damage, the player would "splinter" casting a shockwave out through the
+                  level making the combat more difficult for a short period of time.
+                </p>
+                <p>
+                  I decided that it would be interesting if the "shockwave" that was sent out is actually just a mask between 2 different post processing effects.
+                  Basically, shockwave goes out and makes the game black and white, Collapsing when the segment ends. The way I achieved this was with 2 Identical
+                  masks in both materials controlled by a material parameter collection. That way I could simply increase and decrease the shockwave with a single
+                  float without having to change or merge either effect.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/splinterCropped.gif" alt="picture from past game." />
+                </p>
+              </section>
+              <section id="entry4b">
+                <br><br><br><br><br><br><br><br>
+                <p>
+                  I made some interesting assets for splinters of regret. Most of them could get away with being somewhat low detail because of our deres effect.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/swordInGame.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  The sword I made was quick and dirty but works pretty well with all the effects layered ontop of it. The stretch joint was for blur frames in
+                  animation.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/swordPose.png" alt="picture from past game." />
+                </p>
+                <p>
+                  up close without the final post-processing the flaws are a lot more noticeable.
+                </p>
+                <p>
+                  One of the abilities I worked on we ended up scrapping. You would be able to spend charges you gained during combat. Transforming them intro
+                  crystal pillars that reflects damage to enemies when hit. I experimented with using blendshapes to create this effect.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/blendShapeTransform.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  In blender you are able to shrink wrap 1 object onto another and create a blendshape between them. This is not your normal use case for blenshapes
+                  but it is interesting that you can make them behave almost like a 3D version of the tween effect in Adobe Flash.
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/blendTransform.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  For the final effect I use some math to create rotating points around the player for the crystals to transform towards, then it's as simple as
+                  interpolating their position.
+                </p>
+              </section>
+              <section id="entry4c">
+                <br><br><br><br><br><br><br><br>
+                <p>
+                  Some prototype UI I made for splinter of Regret
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/titleUI.gif" alt="picture from past game." />
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/page2.png" alt="picture from past game." />
+                </p>
+                <p>
+                  <img class="journal__image" src="./images/abilityBar.png" alt="picture from past game." />
+                </p>
+              </section>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry5" data-sr>
+            <div class="section__title">
+              Concrete Pillar Baked Destruction
+              <br>
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/bakedDestruction.png" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry6" data-sr>
+            <div class="section__title">
+              Void Axe
+              <br>
+            </div>
+            <div class="section__content">
+              <p>Link to
+                <a class="underline-link" href="https://imgur.com/gallery/Jz8V6u8" target="_blank"> Imgur album here</a>.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/close.png" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry7" data-sr>
+            <div class="section__title">
+              Legacy Texture Study
+              <br>
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/legacyTexture.jpg" alt="picture from past game." />
+              </p>
+              <p>
+                Some legacy texture work I did for university pay hommage to the EAE program.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/legacyZoom.jpg" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry8" data-sr>
+            <div class="section__title">
+              FK/IK Study
+              <br>
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/FK.gif" alt="picture from past game." />
+              </p>
+              <p>
+                <img class="journal__image" src="./images/IK.gif" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry9" data-sr>
+            <div class="section__title">
+              Cel Shaded Post-processing Filter
+              <br>
+            </div>
+            <div class="section__content">
+              <p>
+                <img class="journal__image" src="./images/CelShaded.png" alt="picture from past game." />
+              </p>
+              <p>
+                <img class="journal__image" src="./images/celAnim.gif" alt="picture from past game." />
+              </p>
+              <p>
+                <img class="journal__image" src="./images/CelColor.png" alt="picture from past game." />
+              </p>
+              <p>
+                <img class="journal__image" src="./images/shadingOnHood.jpg" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+          <section class="section__journal" id="entry10" data-sr>
+            <div class="section__title">
+              Node.js Discord Bot
+              <br>
+            </div>
+            <div class="section__content">
+              <p>Link to
+                <a class="underline-link" href="https://imgur.com/gallery/Jz8V6u8" target="_blank"> Github page here</a>.
+              </p>
+              <p>
+                Discord bot I wrote from scratch in Node.js. Libraries used: Discord.js, ytdl-core, play-dl, ytsr
+              </p>
+              <p>
+                <img class="journal__image" src="./images/nevelBot2.png" alt="picture from past game." />
+              </p>
+              <p>
+                Features the ability to play youtube videos over voice, either with URL or keyword search commands, spam protection, 
+                an anti-tamper system that messages you a clean invite link when the bot detects any integration changes, or one of your 
+                friends kicks the bot to get around the spam filter. (looking at you Nevle)
+              </p>
+              <p>
+                <img class="journal__image" src="./images/nevelBot.png" alt="picture from past game." />
+              </p>
+              <p>
+                lots of pointless commands and inside jokes.
+              </p>
+              <p>
+                <img class="journal__image" src="./images/nevelBot3.gif" alt="picture from past game." />
+              </p>
+            </div>
+          </section>
+  
+        </div>
+        <div class="contents">
+          <nav class="toc">
+            <ul>
+              <li><a class="force-smooth-scroll" href="#top">Chameleon Rig</a></li>
+              <li><a class="force-smooth-scroll" href="#entry12">GPU Profiling</a></li>
+              <li>
+                <a class="force-smooth-scroll" href="#entry2">Crystal Spell</a>
+                <ul>
+                  <li><a class="force-smooth-scroll" href="#entry2a">- Procedural Splines</a></li>
+                  <li><a class="force-smooth-scroll" href="#entry2b">- Soul Coasters</a></li>
+                  <li><a class="force-smooth-scroll" href="#entry2c">- Refraction</a></li>
+                </ul>
+              </li>
+              <li><a class="force-smooth-scroll" href="#entry3">Blood Trail</a></li>
+              <li>
+                <a class="force-smooth-scroll" href="#entry4">Splinters of Regret</a>
+                <ul>
+                  <li><a class="force-smooth-scroll" href="#entry4a">- Post-processing</a></li>
+                  <li><a class="force-smooth-scroll" href="#entry4b">- Assets</a></li>
+                  <li><a class="force-smooth-scroll" href="#entry4c">- User Interface</a></li>
+                </ul>
+              </li>
+              <li><a class="force-smooth-scroll" href="#entry5">Houdini Pillar</a></li>
+              <li><a class="force-smooth-scroll" href="#entry6">Void Axe</a></li>
+              <li><a class="force-smooth-scroll" href="#entry7">Legacy Texture</a></li>
+              <li><a class="force-smooth-scroll" href="#entry8">FK/IK Study</a></li>
+              <li><a class="force-smooth-scroll" href="#entry9">Cel Shading Filter</a></li>
+              <li><a class="force-smooth-scroll" href="#entry10">Discord Bot</a></li>
+            </ul>
+            <svg class="toc-marker" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+              <path stroke="#D15F5F" stroke-width="3" fill="transparent" stroke-dasharray="0, 0, 0, 1000" stroke-linecap="round" stroke-linejoin="round" transform="translate(-0.5, -0.5)" />
+            </svg>
+          </nav>
+        </div>
+      </div>
+    </div>
+    
+
+    <footer class="footer">
+      <div class="footer__copyright">
+
+        <a href="./index.html" target="_blank" class="arrow-link-left">Home</a>
+      </div>
+      <div class="footer__links">
+        <a href="jeremy.p.creagan@gmail.com" target="_blank" title="email">
+          <span class="text">email</span>
+          <i class="fas fa-envelope"></i>
+          <img src="images/itchio.svg" alt="twitter"> 
+        </a>
+        <a href="https://twitter.com/KeemlyS" target="_blank" title="twitter">
+          <span class="text">twitter</span>
+          <i class="fab fa-twitter"></i>
+          <img src="images/itchio.svg" alt="twitter">
+        </a>
+        <a href="https://www.linkedin.com/in/jeremy-creagan-a23b23a0/" target="_blank" title="linkedin">
+            <span class="text">linkedin</span>
+            <i class="fab fa-linkedin"></i>
+            <img src="images/itchio.svg" alt="twitter">
+        </a>
+        <a href="https://www.instagram.com/jeremycreagan.226/" target="_blank" title="instagram">
+            <span class="text">instagram</span>
+            <i class="fa-brands fa-instagram"></i>
+            <img src="images/itchio.svg" alt="twitter">
+        </a>
+        <a href="https://www.artstation.com/jeremycreagan" target="_blank" title="artstation">
+            <span class="text">artstation</span>
+            <i class="fa-brands fa-artstation"></i>
+            <img src="images/itchio.svg" alt="twitter">
+        </a>
+      </div>
+    </footer>
+
+    <button id="top-button" style="display: inline-block;">
+      <img src="" alt=""> </button>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
+  <script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/scroll.js"></script>
+</body>
+
+
+</html>
